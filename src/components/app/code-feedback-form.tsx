@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wand2 } from 'lucide-react';
+import { Wand2, Mic } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
@@ -34,6 +34,28 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
     },
   });
 
+  // TODO: Implement Speech-to-Text functionality
+  // This requires using the browser's Web Speech API.
+  //
+  // 1. Create a state to manage the recording status for each field.
+  //    const [isRecording, setIsRecording] = useState({ problem: false, code: false });
+  //
+  // 2. Implement a function to handle starting/stopping recording.
+  //    This function will check for browser support and manage permissions.
+  //    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  //    recognition.onresult = (event) => {
+  //      const transcript = event.results[0][0].transcript;
+  //      // Use form.setValue(fieldName, transcript) to update the input.
+  //    };
+  //
+  // 3. Attach this function to the onClick event of the Mic buttons below.
+  const handleListen = (field: 'problemDescription' | 'code') => {
+    // Placeholder function
+    alert(
+      'Speech-to-Text functionality needs to be implemented using the Web Speech API.'
+    );
+  };
+  
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     setFeedback(null);
@@ -71,7 +93,19 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
               name="problemDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg">Problem Description</FormLabel>
+                  <div className="flex items-center justify-between">
+                    <FormLabel className="text-lg">Problem Description</FormLabel>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleListen('problemDescription')}
+                      className="h-8 w-8"
+                    >
+                      <Mic className="h-4 w-4" />
+                      <span className="sr-only">Use microphone</span>
+                    </Button>
+                  </div>
                   <FormControl>
                     <Textarea
                       placeholder="e.g., Write a function to reverse a string."
@@ -88,7 +122,19 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
               name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg">Your Code</FormLabel>
+                  <div className="flex items-center justify-between">
+                    <FormLabel className="text-lg">Your Code</FormLabel>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleListen('code')}
+                      className="h-8 w-8"
+                    >
+                      <Mic className="h-4 w-4" />
+                      <span className="sr-only">Use microphone</span>
+                    </Button>
+                  </div>
                   <FormControl>
                     <Textarea
                       placeholder="function reverseString(str) { ... }"
