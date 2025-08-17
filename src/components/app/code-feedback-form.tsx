@@ -100,7 +100,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full text-lg py-6 bg-primary text-primary-foreground hover:bg-primary/90" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full text-lg py-6 bg-accent text-accent-foreground hover:bg-accent/90" disabled={form.formState.isSubmitting}>
               <Wand2 className="mr-2 h-5 w-5" />
               Get AI Feedback
             </Button>
