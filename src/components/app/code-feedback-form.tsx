@@ -57,8 +57,11 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
   return (
     <Card className="bg-card/80 border-border shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl">Enter Problem Details</CardTitle>
-        <CardDescription>Paste the problem description and your code below.</CardDescription>
+        <CardTitle className="text-2xl flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-foreground/80"><path d="M10 12.5 8 15l-4-4"/><path d="m14 12.5 2 2.5 4-4"/><path d="M14 5a1 1 0 0 0-1-1H3a2 2 0 0 0-2 2v7.5a2.5 2.5 0 0 0 2.5 2.5H10"/><path d="M21 7a1 1 0 0 0-1-1h-5a2 2 0 0 0-2 2v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1Z"/></svg>
+          Stealth Coder
+        </CardTitle>
+        <CardDescription>Your discreet AI interview assistant.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
