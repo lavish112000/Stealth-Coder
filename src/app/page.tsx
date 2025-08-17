@@ -11,7 +11,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <main className="min-h-screen bg-background text-foreground p-4 sm:p-6 md:p-8">
+    <main className="min-h-screen bg-transparent text-foreground p-4 sm:p-6 md:p-8">
       <div className="max-w-7xl mx-auto">
         <header className="mb-8 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold text-primary-foreground flex items-center justify-center gap-4">
