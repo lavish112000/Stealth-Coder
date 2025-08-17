@@ -12,14 +12,14 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GetCodeFeedbackInputSchema = z.object({
-  code: z.string().describe('The code to provide feedback on.'),
   problemDescription: z.string().describe('The description of the coding problem.'),
+  code: z.string().describe('The code to provide feedback on.'),
 });
 export type GetCodeFeedbackInput = z.infer<typeof GetCodeFeedbackInputSchema>;
 
 const GetCodeFeedbackOutputSchema = z.object({
-  feedback: z.string().describe('The feedback on the code.'),
-  suggestions: z.string().describe('Suggestions for improving the code.'),
+  highLevelExplanation: z.string().describe('A high-level explanation of the code solution.'),
+  lineByLineBreakdown: z.string().describe('A line-by-line breakdown of the code.'),
 });
 export type GetCodeFeedbackOutput = z.infer<typeof GetCodeFeedbackOutputSchema>;
 
@@ -31,15 +31,15 @@ const prompt = ai.definePrompt({
   name: 'getCodeFeedbackPrompt',
   input: {schema: GetCodeFeedbackInputSchema},
   output: {schema: GetCodeFeedbackOutputSchema},
-  prompt: `You are an AI code assistant that provides feedback and suggestions on code.
+  prompt: `You are an AI code assistant that helps users understand and explain a solution to a coding problem.
 
   Problem Description: {{{problemDescription}}}
 
   Code: {{{code}}}
 
-  Provide feedback on the code and suggestions for improving it.
-  Feedback:
-  Suggestions:`,
+  Provide a high-level explanation of the code's approach and then a line-by-line breakdown.
+  High-Level Explanation:
+  Line-by-Line Breakdown:`,
 });
 
 const getCodeFeedbackFlow = ai.defineFlow(

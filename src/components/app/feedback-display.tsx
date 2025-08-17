@@ -3,7 +3,7 @@
 import type { GetCodeFeedbackOutput } from '@/ai/flows/get-code-feedback';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Bot, Lightbulb, AlertCircle } from 'lucide-react';
+import { Bot, Lightbulb, AlertCircle, FileText, IterationCcw } from 'lucide-react';
 
 type FeedbackDisplayProps = {
   feedback: GetCodeFeedbackOutput | null;
@@ -40,21 +40,21 @@ export function FeedbackDisplay({ feedback, isLoading, error }: FeedbackDisplayP
   const FeedbackContent = () => (
     <div className="space-y-6">
       <div>
-        <h3 className="text-xl flex items-center gap-2 text-primary-foreground/90">
-          <Bot className="h-6 w-6" />
-          Feedback
+        <h3 className="text-xl flex items-center gap-2 text-primary-foreground/90 font-sans">
+          <FileText className="h-6 w-6" />
+          High-Level Explanation
         </h3>
-        <div className="mt-2 text-foreground/90 whitespace-pre-wrap bg-secondary p-4 rounded-md">
-          {feedback?.feedback}
+        <div className="mt-2 text-foreground/90 whitespace-pre-wrap bg-secondary p-4 rounded-md font-sans">
+          {feedback?.highLevelExplanation}
         </div>
       </div>
       <div>
-        <h3 className="text-xl flex items-center gap-2 text-primary-foreground/90">
-          <Lightbulb className="h-6 w-6" />
-          Suggestions
+        <h3 className="text-xl flex items-center gap-2 text-primary-foreground/90 font-sans">
+          <IterationCcw className="h-6 w-6" />
+          Line-by-Line Breakdown
         </h3>
-        <div className="mt-2 text-foreground/90 whitespace-pre-wrap font-mono bg-secondary p-4 rounded-md">
-          {feedback?.suggestions}
+        <div className="mt-2 text-foreground/90 whitespace-pre-wrap bg-secondary p-4 rounded-md font-mono">
+          {feedback?.lineByLineBreakdown}
         </div>
       </div>
     </div>
