@@ -40,7 +40,7 @@ export function FeedbackDisplay({ feedback, isLoading, error }: FeedbackDisplayP
   const FeedbackContent = () => (
     <div className="space-y-6">
       <div>
-        <h3 className="text-xl font-headline flex items-center gap-2 text-accent">
+        <h3 className="text-xl font-headline flex items-center gap-2 text-primary-foreground/90">
           <Bot className="h-6 w-6" />
           Feedback
         </h3>
@@ -49,7 +49,7 @@ export function FeedbackDisplay({ feedback, isLoading, error }: FeedbackDisplayP
         </div>
       </div>
       <div>
-        <h3 className="text-xl font-headline flex items-center gap-2 text-accent">
+        <h3 className="text-xl font-headline flex items-center gap-2 text-primary-foreground/90">
           <Lightbulb className="h-6 w-6" />
           Suggestions
         </h3>
@@ -61,7 +61,7 @@ export function FeedbackDisplay({ feedback, isLoading, error }: FeedbackDisplayP
   );
 
   return (
-    <Card className="bg-card border-border shadow-lg min-h-[642px]">
+    <Card className="bg-card/80 border-border shadow-lg min-h-[642px]">
       <CardHeader>
         <CardTitle className="text-2xl font-headline">AI Assistant</CardTitle>
         <CardDescription>Feedback and suggestions from the AI will be displayed below.</CardDescription>

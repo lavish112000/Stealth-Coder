@@ -55,7 +55,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
   }
 
   return (
-    <Card className="bg-card border-border shadow-lg">
+    <Card className="bg-card/80 border-border shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-headline">Enter Problem Details</CardTitle>
         <CardDescription>Paste the problem description and your code below.</CardDescription>
@@ -89,7 +89,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
                   <FormControl>
                     <Textarea
                       placeholder="function reverseString(str) { ... }"
-                      className="min-h-[250px] font-code text-sm bg-background/50"
+                      className="min-h-[250px] font-code text-sm bg-muted/50"
                       {...field}
                     />
                   </FormControl>
@@ -97,7 +97,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full text-lg py-6 bg-primary hover:bg-primary/90" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full text-lg py-6 bg-primary text-primary-foreground hover:bg-primary/90" disabled={form.formState.isSubmitting}>
               <Wand2 className="mr-2 h-5 w-5" />
               Get AI Feedback
             </Button>
