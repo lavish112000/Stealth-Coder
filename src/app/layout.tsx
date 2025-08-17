@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`dark ${inter.variable} ${sourceCodePro.variable}`}>
-      <body className="font-body antialiased">
+      <body>
         {children}
         <Toaster />
       </body>

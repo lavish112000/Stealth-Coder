@@ -57,7 +57,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
   return (
     <Card className="bg-card/80 border-border shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl font-headline">Enter Problem Details</CardTitle>
+        <CardTitle className="text-2xl">Enter Problem Details</CardTitle>
         <CardDescription>Paste the problem description and your code below.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -72,7 +72,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
                   <FormControl>
                     <Textarea
                       placeholder="e.g., Write a function to reverse a string."
-                      className="min-h-[120px] font-body"
+                      className="min-h-[120px]"
                       {...field}
                     />
                   </FormControl>
@@ -89,7 +89,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
                   <FormControl>
                     <Textarea
                       placeholder="function reverseString(str) { ... }"
-                      className="min-h-[250px] font-code text-sm bg-muted/50"
+                      className="min-h-[250px] font-mono text-sm bg-muted/50"
                       {...field}
                     />
                   </FormControl>
