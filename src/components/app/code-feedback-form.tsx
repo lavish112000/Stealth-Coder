@@ -75,7 +75,7 @@ export function CodeFeedbackForm({ setFeedback, setIsLoading, setError }: CodeFe
                   <FormControl>
                     <Textarea
                       placeholder="e.g., Write a function to reverse a string."
-                      className="min-h-[120px]"
+                      className="min-h-[120px] font-sans"
                       {...field}
                     />
                   </FormControl>
