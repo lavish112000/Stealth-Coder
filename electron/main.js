@@ -9,11 +9,41 @@
 import { app, BrowserWindow, globalShortcut } from 'electron';
 import path from 'path';
 import { spawn, execSync } from 'child_process';
+import http from 'http';
 
 // Global variables for window management
 let mainWindow;        // Reference to the main application window
 let isVisible = true;  // Tracks current visibility state of the window
 let nextServer;        // Reference to the Next.js server process
+
+/**
+ * Waits for the Next.js server to start and become accessible
+ * @param {string} url - The URL of the Next.js server
+ * @param {number} timeout - Maximum time to wait in milliseconds
+ * @returns {Promise<void>} Promise that resolves when server is ready
+ */
+function waitForNextServer(url, timeout = 30000) {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    function check() {
+      http.get(url, res => {
+        if (res.statusCode === 200) {
+          resolve();
+        } else {
+          retry();
+        }
+      }).on('error', retry);
+    }
+    function retry() {
+      if (Date.now() - start > timeout) {
+        reject(new Error('Next.js server startup timeout'));
+      } else {
+        setTimeout(check, 500);
+      }
+    }
+    check();
+  });
+}
 
 /**
  * Starts the Next.js server as a child process
@@ -58,10 +88,26 @@ function startNextServer() {
     }, 30000);
   });
 }
+
+/**
+ * Starts the Next.js server if not already running
+ * In development, it waits for the server to be ready at the expected URL
+ * In production, it spawns a new server process
+ */
+async function startNextServerIfNeeded() {
+  if (process.env.NODE_ENV === 'development') {
+    // In dev, assume Next.js is already running
+    await waitForNextServer('http://localhost:9002');
+    return;
+  }
+  // In production, start the server as a child process
+  return startNextServer();
+}
+
 async function createWindow() {
   try {
-    // Start Next.js server first
-    await startNextServer();
+    // Start Next.js server or wait for it
+    await startNextServerIfNeeded();
 
     // Create the main BrowserWindow with stealth configuration
     mainWindow = new BrowserWindow({
