@@ -26,13 +26,17 @@ npm run electron-dev
 
 - [Features](#-features)
 - [How It Works](#-how-it-works)
-- [Technical Architecture](#-technical-architecture)
+- [Technical Architecture](#️-technical-architecture)
 - [Prerequisites](#-prerequisites)
 - [Installation](#-installation)
 - [Configuration](#-configuration)
 - [Usage](#-usage)
 - [Development](#-development)
 - [API Integration](#-api-integration)
+- [Security Features](#-security-features)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [License](#-license)
 - [Security Features](#-security-features)
 - [Troubleshooting](#-troubleshooting)
 - [Contributing](#-contributing)
@@ -83,7 +87,7 @@ npm run electron-dev
 
 ### Frontend Layer
 
-```
+```text
 Next.js 15 + TypeScript + Tailwind CSS
 ├── Components (React Hook Form + Zod validation)
 ├── State Management (React useState/useEffect)
@@ -93,7 +97,7 @@ Next.js 15 + TypeScript + Tailwind CSS
 
 ### Desktop Layer
 
-```
+```text
 Electron + Node.js
 ├── Main Process (Window management, system integration)
 ├── Renderer Process (React application)
@@ -103,7 +107,7 @@ Electron + Node.js
 
 ### AI Integration Layer
 
-```
+```text
 Google AI (Gemini API)
 ├── Authentication (API key management)
 ├── Request Processing (Natural language understanding)
@@ -245,7 +249,7 @@ GOOGLE_API_KEY=your_api_key_here
 
 ### Project Structure
 
-```
+```text
 stealth-coder/
 ├── electron/                 # Desktop app configuration
 │   └── main.js              # Electron main process
@@ -327,7 +331,7 @@ npm run typecheck       # Run TypeScript type checking
 
 ### Request Flow
 
-```
+```text
 User Input → Validation → AI Processing → Response Formatting → UI Display
 ```
 
@@ -428,7 +432,7 @@ npm run electron-dev 2>&1 | tee debug.log
 
 ### Commit Guidelines
 
-```
+```text
 feat: new feature
 fix: bug fix
 docs: documentation
@@ -457,6 +461,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for developers, by developers**
+Built with ❤️ for developers, by developers
 
 *Stay stealthy, code confidently!* 🛡️💻
