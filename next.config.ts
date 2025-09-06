@@ -76,7 +76,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
-  },
+  }
 };
 
 /**
