@@ -6,20 +6,65 @@
  * interface for the Stealth Coder AI assistant.
  */
 
-const { app, BrowserWindow, globalShortcut } = require('electron');
-const path = require('path');
+import { app, BrowserWindow, globalShortcut } from 'electron';
+import path from 'path';
+import { spawn, execSync } from 'child_process';
 
 // Global variables for window management
 let mainWindow;        // Reference to the main application window
 let isVisible = true;  // Tracks current visibility state of the window
+let nextServer;        // Reference to the Next.js server process
 
 /**
- * Creates the main application window with stealth properties
- * Configures the window to be floating, transparent, and undetectable
+ * Starts the Next.js server as a child process
+ * @returns {Promise<void>} Promise that resolves when server is ready
  */
-function createWindow() {
-  // Create the main BrowserWindow with stealth configuration
-  mainWindow = new BrowserWindow({
+function startNextServer() {
+  return new Promise((resolve, reject) => {
+    console.log('Starting Next.js server...');
+
+    // Get the path to the Next.js executable
+    const nextBin = path.join(process.resourcesPath, 'app.asar.unpacked', 'node_modules', '.bin', 'next');
+    const appDir = path.join(process.resourcesPath, 'app.asar.unpacked');
+
+    // Start Next.js in production mode
+    nextServer = spawn(nextBin, ['start', '-p', '9002'], {
+      cwd: appDir,
+      stdio: 'pipe',
+      shell: true
+    });
+
+    // Handle server output
+    nextServer.stdout.on('data', (data) => {
+      console.log(`Next.js: ${data}`);
+      // Check if server is ready
+      if (data.toString().includes('Ready')) {
+        console.log('Next.js server is ready!');
+        resolve();
+      }
+    });
+
+    nextServer.stderr.on('data', (data) => {
+      console.error(`Next.js Error: ${data}`);
+    });
+
+    nextServer.on('close', (code) => {
+      console.log(`Next.js server exited with code ${code}`);
+    });
+
+    // Timeout after 30 seconds
+    setTimeout(() => {
+      reject(new Error('Next.js server startup timeout'));
+    }, 30000);
+  });
+}
+async function createWindow() {
+  try {
+    // Start Next.js server first
+    await startNextServer();
+
+    // Create the main BrowserWindow with stealth configuration
+    mainWindow = new BrowserWindow({
     width: 1000,           // Initial window width
     height: 600,           // Initial window height
     webPreferences: {
@@ -45,9 +90,8 @@ function createWindow() {
     // Windows: Use PowerShell to set display affinity
     // This makes the window invisible to screen capture tools
     try {
-      const { execSync } = require('child_process');
       execSync(`powershell -Command "Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class Win32 { [DllImport(\"user32.dll\")] public static extern bool SetWindowDisplayAffinity(IntPtr hWnd, uint dwAffinity); }'; [Win32]::SetWindowDisplayAffinity((New-Object -ComObject WScript.Shell).AppActivate((Get-Process electron).MainWindowHandle), 17)"`);
-    } catch (e) {
+    } catch {
       console.log('Could not set display affinity');
     }
   }
@@ -84,6 +128,10 @@ function createWindow() {
   // Clean up when window is closed
   mainWindow.on('closed', () => {
     mainWindow = null;
+    // Kill Next.js server when window is closed
+    if (nextServer) {
+      nextServer.kill();
+    }
   });
 
   /**
@@ -115,6 +163,10 @@ function createWindow() {
       }
     }
   });
+  } catch (error) {
+    console.error('Failed to start application:', error);
+    app.quit();
+  }
 }
 
 /**
@@ -122,7 +174,12 @@ function createWindow() {
  */
 
 // Create window when Electron app is ready
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow().catch((error) => {
+    console.error('Failed to create window:', error);
+    app.quit();
+  });
+});
 
 // Handle window close events (platform-specific behavior)
 app.on('window-all-closed', () => {
@@ -134,7 +191,9 @@ app.on('window-all-closed', () => {
 // Recreate window when dock icon clicked (macOS)
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+    createWindow().catch((error) => {
+      console.error('Failed to recreate window:', error);
+    });
   }
 });
 
