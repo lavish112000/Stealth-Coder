@@ -4,7 +4,7 @@
 
 Stealth Coder is a sophisticated desktop application that provides real-time AI assistance during coding interviews while remaining completely undetectable to screen sharing and recording software.
 
-## 🚀 Quick Start
+## 🚀 Quick Start 
 
 ```bash
 # Clone the repository
